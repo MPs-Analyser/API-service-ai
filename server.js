@@ -58,6 +58,6 @@ app.get("/ai_mp_data", async (req, res) => {
 	}
 });
 
-app.listen(PORT, () => {
+app.listen(process.env.PORT || PORT, () => {
 	console.log(`Server is running on http://localhost:${PORT}`);
 });
