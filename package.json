@@ -4,6 +4,7 @@
 	"main": "server.js",
 	"license": "MIT",
 	"type": "module",
+	"node": ">=18.0.0",
 	"scripts": {
 		"start": "server.js"
 	},
