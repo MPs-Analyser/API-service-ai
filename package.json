@@ -1,0 +1,15 @@
+{
+	"name": "mp_ai_service",
+	"version": "1.0.0",
+	"main": "server.js",
+	"license": "MIT",
+	"type": "module",
+	"scripts": {
+		"start": "server.js"
+	},
+	"dependencies": {
+		"dotenv": "^16.3.1",
+		"express": "^4.18.2",
+		"langchain": "^0.0.134"
+	}
+}
