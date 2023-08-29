@@ -9,7 +9,7 @@ import "dotenv/config";
 const app = express();
 const PORT = 3000;
 
-const question = {
+const questions = {
 	overview: "Give a 100 word general summary of {name}'s career",
 	voting: "Give ageneral overview of {name}'s voting history",
 	immigration: "What is {name}'s stance on immigration",
@@ -40,12 +40,36 @@ const executor = await initializeAgentExecutorWithOptions(tools, model, {
 	verbose: true,
 });
 
+app.get("/", async (req, res) => {
+	const urlName = req.query.name;
+	const summary = {};
+	if (urlName) {
+		for (const question in questions) {
+			const promptTemplate = PromptTemplate.fromTemplate(
+				questions[question]
+			);
+			const input = await promptTemplate.format({ name: urlName });
+			const result = await executor.call({
+				input,
+			});
+
+			summary[question] = result.output;
+		}
+
+		console.log("summary", summary);
+
+		res.send(JSON.stringify(summary));
+	} else {
+		res.send("Sorry your query isn't formatted correctly");
+	}
+});
+
 app.get("/ai_mp_data", async (req, res) => {
 	const urlName = req.query.name;
 	const urlQuestion = req.query.question;
-	if (urlName && question && question.hasOwnProperty(urlQuestion)) {
+	if (urlName && question && questions.hasOwnProperty(urlQuestion)) {
 		const promptTemplate = PromptTemplate.fromTemplate(
-			question[urlQuestion]
+			questions[urlQuestion]
 		);
 		const input = await promptTemplate.format({ name: urlName });
 		const result = await executor.call({
