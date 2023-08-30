@@ -56,8 +56,6 @@ app.get("/", async (req, res) => {
 			summary[question] = result.output;
 		}
 
-		console.log("summary", summary);
-
 		res.send(JSON.stringify(summary));
 	} else {
 		res.send("Sorry your query isn't formatted correctly");
@@ -83,5 +81,5 @@ app.get("/ai_mp_data", async (req, res) => {
 });
 
 app.listen(process.env.PORT || PORT, () => {
-	console.log(`Server is running on http://localhost:${PORT}`);
+	console.log(`Server is now running...`);
 });
